@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "dist/",
+    "moduleResolution": "node",
+    "module": "es6",
+    "target": "es6",
+    "inlineSources": true,
+    "inlineSourceMap": true,
+    "allowJs": false,
+    "strict": true,
+    "declaration": true,
+    "declarationDir": "types/"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
