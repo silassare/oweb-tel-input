@@ -6,7 +6,12 @@
 
 // thanks to https://github.com/jackocnr/intl-tel-input/
 import './utils.js';
-import { tCountry, cc2ToCountry, dialCodeToCc2 } from './countries.js';
+import {
+	tCountry,
+	cc2ToCountry,
+	dialCodeToCc2,
+	countries,
+} from './countries.js';
 
 type tOptions = {
 	cc2: string;
@@ -175,6 +180,13 @@ class OWebTelInput {
 		}
 
 		return found;
+	}
+
+	static getCountriesList() {
+		return cc2ToCountry;
+	}
+	static getCountryByCc2(cc2: string) {
+		return cc2ToCountry[cc2];
 	}
 
 	static getDialCode(str: string): string {

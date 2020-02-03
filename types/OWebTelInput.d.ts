@@ -31,6 +31,10 @@ declare class OWebTelInput {
     static isPhoneNumberPossible(number: string, possible?: boolean): boolean;
     static getCountryWithCc2(cc2: string): tCountry;
     static getCountryWithDialCode(dialCode: string): tCountry | null;
+    static getCountriesList(): {
+        [key: string]: tCountry;
+    };
+    static getCountryByCc2(cc2: string): tCountry;
     static getDialCode(str: string): string;
     private _getFormat;
 }
