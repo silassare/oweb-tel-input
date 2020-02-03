@@ -2,8 +2,8 @@
   "compilerOptions": {
     "outDir": "dist/",
     "moduleResolution": "node",
-    "module": "es6",
-    "target": "es6",
+    "module": "esnext",
+    "target": "esnext",
     "inlineSources": true,
     "inlineSourceMap": true,
     "allowJs": false,

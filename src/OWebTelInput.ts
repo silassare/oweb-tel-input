@@ -6,9 +6,8 @@
 
 // thanks to https://github.com/jackocnr/intl-tel-input/
 import './utils.js';
-import countriesMap, { tCountry } from './countriesMap';
+import { tCountry, cc2ToCountry, dialCodeToCc2 } from './countries.js';
 
-type tChangeHandler = (c: tCountry) => void;
 type tOptions = {
 	cc2: string;
 	//nationalMode: true,
@@ -44,16 +43,9 @@ class OWebTelInput {
 	private phoneNumber: string = '';
 	private options: tOptions = {} as tOptions;
 	private currentCountry: tCountry = {} as tCountry;
-	private changeHandlers: tChangeHandler[] = [];
 
 	constructor(options: any) {
 		this._updateOptions(options);
-	}
-
-	onChange(handler: tChangeHandler) {
-		if (typeof handler === 'function') {
-			this.changeHandlers.push(handler);
-		}
 	}
 
 	setPhoneNumber(number: string) {
@@ -73,15 +65,20 @@ class OWebTelInput {
 			this.phoneNumber = number;
 		}
 
-		return this._inform();
+		return this;
 	}
 
 	setCountry(cc2: string) {
-		let opt = Object.assign({}, this.options);
-		opt.cc2 = cc2;
-		opt.number = '+' + countriesMap.countries[cc2.toLowerCase()].dialCode;
+		let cc2Lower = cc2.toLowerCase();
+		if (cc2ToCountry[cc2Lower]) {
+			let opt = Object.assign({}, this.options);
+			opt.cc2 = cc2Lower;
+			opt.number = '+' + cc2ToCountry[cc2Lower].dialCode;
 
-		this._updateOptions(opt);
+			this._updateOptions(opt);
+		} else {
+			throw new Error('Unknown country code: ' + cc2);
+		}
 	}
 
 	private _updateOptions(options: tOptions): this {
@@ -95,8 +92,7 @@ class OWebTelInput {
 		if (!this.options.number) {
 			// if no number initialize to default cc2 dialCode
 			this.options.number =
-				'+' +
-				countriesMap.countries[this.options.cc2.toLowerCase()].dialCode;
+				'+' + cc2ToCountry[this.options.cc2.toLowerCase()].dialCode;
 		}
 
 		this.setPhoneNumber(this.options.number);
@@ -160,14 +156,14 @@ class OWebTelInput {
 	}
 
 	static getCountryWithCc2(cc2: string) {
-		return countriesMap.countries[cc2.toLowerCase()];
+		return cc2ToCountry[cc2.toLowerCase()];
 	}
 
 	static getCountryWithDialCode(dialCode: string): tCountry | null {
 		let found = null;
 
 		if (dialCode) {
-			let cc2List = countriesMap.dialCodeToCc2[dialCode];
+			let cc2List = dialCodeToCc2[dialCode];
 
 			for (let j = 0; j < cc2List.length; j++) {
 				let first = cc2List[j]; //may be null so we let it and go to the next if exists
@@ -196,7 +192,7 @@ class OWebTelInput {
 				if (numberReg.test(c)) {
 					numericChars += c;
 					// if current numericChars make a valid dial code
-					if (countriesMap.dialCodeToCc2[numericChars]) {
+					if (dialCodeToCc2[numericChars]) {
 						// store the actual raw string (useful for matching later)
 						dialCode = numericChars;
 					}
@@ -209,15 +205,6 @@ class OWebTelInput {
 		}
 
 		return dialCode;
-	}
-
-	private _inform(): this {
-		for (let i = 0; i < this.changeHandlers.length; i++) {
-			let cb = this.changeHandlers[i];
-			cb(this.currentCountry);
-		}
-
-		return this;
 	}
 
 	private _getFormat(

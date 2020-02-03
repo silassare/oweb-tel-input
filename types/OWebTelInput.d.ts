@@ -4,8 +4,7 @@
  * Emile Silas Sare (emile.silas@gmail.com)
  */
 import './utils.js';
-import { tCountry } from './countriesMap';
-declare type tChangeHandler = (c: tCountry) => void;
+import { tCountry } from './countries.js';
 declare type tOptions = {
     cc2: string;
     number: string;
@@ -18,9 +17,7 @@ declare class OWebTelInput {
     private phoneNumber;
     private options;
     private currentCountry;
-    private changeHandlers;
     constructor(options: any);
-    onChange(handler: tChangeHandler): void;
     setPhoneNumber(number: string): this;
     setCountry(cc2: string): void;
     private _updateOptions;
@@ -35,7 +32,6 @@ declare class OWebTelInput {
     static getCountryWithCc2(cc2: string): tCountry;
     static getCountryWithDialCode(dialCode: string): tCountry | null;
     static getDialCode(str: string): string;
-    private _inform;
     private _getFormat;
 }
 export default OWebTelInput;
