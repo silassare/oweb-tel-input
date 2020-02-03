@@ -34,7 +34,6 @@ declare class OWebTelInput {
     static getCountriesList(): {
         [key: string]: tCountry;
     };
-    static getCountryByCc2(cc2: string): tCountry;
     static getDialCode(str: string): string;
     private _getFormat;
 }

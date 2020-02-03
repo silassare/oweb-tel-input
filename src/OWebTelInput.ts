@@ -185,9 +185,6 @@ class OWebTelInput {
 	static getCountriesList() {
 		return cc2ToCountry;
 	}
-	static getCountryByCc2(cc2: string) {
-		return cc2ToCountry[cc2];
-	}
 
 	static getDialCode(str: string): string {
 		let dialCode = '',
