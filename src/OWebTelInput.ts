@@ -2,21 +2,16 @@
  * OWebTelInput.js 2016-2019
  *
  * Emile Silas Sare (emile.silas@gmail.com)
+ *
+ * Thanks to https://github.com/jackocnr/intl-tel-input/
  */
-
-// thanks to https://github.com/jackocnr/intl-tel-input/
 import './utils.js';
-import {
-	tCountry,
-	cc2ToCountry,
-	dialCodeToCc2,
-	countries,
-} from './countries.js';
+import { tCountry, cc2ToCountry, dialCodeToCc2, countries } from './countries';
 
 type tOptions = {
 	cc2: string;
-	//nationalMode: true,
-	number: string;
+	// nationalMode: true,
+	phoneNumber: string;
 	numberType: 'MOBILE';
 	preferredCountries: string[];
 	showSamplePlaceholder: boolean;
@@ -26,14 +21,14 @@ type tOptions = {
 const utils = (window as any).intlTelInputUtils,
 	defaultOptions: tOptions = {
 		cc2: 'bj',
-		//nationalMode: false,
-		number: '',
+		// nationalMode: false,
+		phoneNumber: '',
 		numberType: 'MOBILE',
 		preferredCountries: ['bj'],
 		showSamplePlaceholder: true,
 		allowedCountries: () => [],
 	},
-	cleanPhoneString = function(str: string) {
+	cleanPhoneString = function (str: string) {
 		return (
 			'+' +
 			str
@@ -53,32 +48,32 @@ class OWebTelInput {
 		this._updateOptions(options);
 	}
 
-	setPhoneNumber(number: string) {
-		number = cleanPhoneString(number);
+	setPhoneNumber(phoneNumber: string) {
+		phoneNumber = cleanPhoneString(phoneNumber);
 
-		let dialCode = OWebTelInput.getDialCode(number),
-			formatted;
+		const dialCode = OWebTelInput.getDialCode(phoneNumber);
+		let formatted;
 
 		if (dialCode) {
 			this.currentCountry =
 				OWebTelInput.getCountryWithDialCode(dialCode) ||
 				this.currentCountry;
-			formatted = this._getFormat(number);
+			formatted = this._getFormat(phoneNumber);
 
 			this.phoneNumber = formatted;
 		} else {
-			this.phoneNumber = number;
+			this.phoneNumber = phoneNumber;
 		}
 
 		return this;
 	}
 
 	setCountry(cc2: string) {
-		let cc2Lower = cc2.toLowerCase();
+		const cc2Lower = cc2.toLowerCase();
 		if (cc2ToCountry[cc2Lower]) {
-			let opt = Object.assign({}, this.options);
+			const opt = Object.assign({}, this.options);
 			opt.cc2 = cc2Lower;
-			opt.number = '+' + cc2ToCountry[cc2Lower].dialCode;
+			opt.phoneNumber = '+' + cc2ToCountry[cc2Lower].dialCode;
 
 			this._updateOptions(opt);
 		} else {
@@ -90,17 +85,17 @@ class OWebTelInput {
 		this.options = Object.assign(
 			{},
 			defaultOptions,
-			options || this.options || {}
+			options || this.options || {},
 		);
 		this.currentCountry = OWebTelInput.getCountryWithCc2(this.options.cc2);
 
-		if (!this.options.number) {
-			// if no number initialize to default cc2 dialCode
-			this.options.number =
+		if (!this.options.phoneNumber) {
+			// if no phoneNumber initialize to default cc2 dialCode
+			this.options.phoneNumber =
 				'+' + cc2ToCountry[this.options.cc2.toLowerCase()].dialCode;
 		}
 
-		this.setPhoneNumber(this.options.number);
+		this.setPhoneNumber(this.options.phoneNumber);
 
 		return this;
 	}
@@ -113,31 +108,31 @@ class OWebTelInput {
 		return this.options;
 	}
 
-	isValid(number: string = this.phoneNumber): boolean {
-		return utils.isValidNumber(number, this.currentCountry.cc2);
+	isValid(phoneNumber: string = this.phoneNumber): boolean {
+		return utils.isValidNumber(phoneNumber, this.currentCountry.cc2);
 	}
 
-	isPossible(number: string = this.phoneNumber): boolean {
+	isPossible(phoneNumber: string = this.phoneNumber): boolean {
 		return (
-			utils.getValidationError(number, this.currentCountry.cc2) ===
+			utils.getValidationError(phoneNumber, this.currentCountry.cc2) ===
 			utils.validationError.IS_POSSIBLE
 		);
 	}
 
-	isFor(type: string, number: string = this.phoneNumber): boolean {
+	isFor(type: string, phoneNumber: string = this.phoneNumber): boolean {
 		return (
-			utils.getNumberType(number, this.currentCountry.cc2) ===
+			utils.getNumberType(phoneNumber, this.currentCountry.cc2) ===
 			utils.numberType[type]
 		);
 	}
 
 	getSample(isNationalMode: boolean = false): string {
-		let numberType = utils.numberType[this.options.numberType];
+		const numberType = utils.numberType[this.options.numberType];
 
 		return utils.getExampleNumber(
 			this.currentCountry.cc2,
 			Boolean(isNationalMode),
-			numberType
+			numberType,
 		);
 	}
 
@@ -147,8 +142,11 @@ class OWebTelInput {
 			: utils.formatNumber(this.phoneNumber, this.currentCountry.cc2);
 	}
 
-	static isPhoneNumberPossible(number: string, possible: boolean = false) {
-		let instance = new OWebTelInput({ number: number });
+	static isPhoneNumberPossible(
+		phoneNumber: string,
+		possible: boolean = false,
+	) {
+		const instance = new OWebTelInput({ phoneNumber });
 
 		if (possible === true) {
 			return instance.isPossible();
@@ -168,10 +166,10 @@ class OWebTelInput {
 		let found = null;
 
 		if (dialCode) {
-			let cc2List = dialCodeToCc2[dialCode];
+			const cc2List = dialCodeToCc2[dialCode];
 
 			for (let j = 0; j < cc2List.length; j++) {
-				let first = cc2List[j]; //may be null so we let it and go to the next if exists
+				const first = cc2List[j]; // may be null so we let it and go to the next if exists
 				if (first) {
 					found = OWebTelInput.getCountryWithCc2(first);
 					break;
@@ -187,17 +185,17 @@ class OWebTelInput {
 	}
 
 	static getDialCode(str: string): string {
-		let dialCode = '',
-			phoneNumber = String(str),
+		const phoneNumber = String(str),
 			numberReg = /[0-9]/;
+		let dialCode = '';
 
 		// only interested in international numbers (starting with a plus)
 		if (phoneNumber.charAt(0) === '+') {
 			let numericChars = '';
 			// iterate over chars
 			for (let i = 0; i < phoneNumber.length; i++) {
-				let c = phoneNumber.charAt(i);
-				// if char is number
+				const c = phoneNumber.charAt(i);
+				// if char is phoneNumber
 				if (numberReg.test(c)) {
 					numericChars += c;
 					// if current numericChars make a valid dial code
@@ -217,23 +215,23 @@ class OWebTelInput {
 	}
 
 	private _getFormat(
-		number: string,
-		isNationalMode: boolean = false
+		phoneNumber: string,
+		isNationalMode: boolean = false,
 	): string {
-		let run = number && number.trim().length > 1;
+		const run = phoneNumber && phoneNumber.trim().length > 1;
 		if (run) {
-			let format =
-				isNationalMode || number.charAt(0) !== '+'
+			const format =
+				isNationalMode || phoneNumber.charAt(0) !== '+'
 					? utils.numberFormat.NATIONAL
 					: utils.numberFormat.INTERNATIONAL;
-			number = utils.formatNumber(
-				number,
+			phoneNumber = utils.formatNumber(
+				phoneNumber,
 				this.currentCountry.cc2,
-				format
+				format,
 			);
 		}
 
-		return number;
+		return phoneNumber;
 	}
 }
 
