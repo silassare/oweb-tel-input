@@ -1,17 +1,17 @@
 {
-  "compilerOptions": {
-    "outDir": "dist/",
-    "moduleResolution": "node",
-    "module": "esnext",
-    "target": "esnext",
-    "inlineSources": true,
-    "inlineSourceMap": true,
-    "allowJs": false,
-    "strict": true,
-    "declaration": true,
-    "declarationDir": "types/"
-  },
-  "include": [
-    "src/**/*"
-  ]
+	"compilerOptions": {
+		"outDir": "dist/",
+		"moduleResolution": "node",
+		"module": "esnext",
+		"target": "esnext",
+		"inlineSources": true,
+		"sourceMap": true,
+		"allowJs": false,
+		"strict": true,
+		"declaration": true,
+		"declarationDir": "types/"
+	},
+	"include": [
+		"src/**/*"
+	]
 }
