@@ -1,6 +1,6 @@
 {
 	"name": "oweb-tel-input",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A simple phone input validator for oweb",
 	"main": "dist/index.js",
 	"typings": "types/index.d.ts",
