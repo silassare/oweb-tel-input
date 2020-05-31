@@ -1,5 +1,12 @@
+/**
+ * OWebTelInput.js 2016-2019
+ *
+ * Emile Silas Sare (emile.silas@gmail.com)
+ *
+ * Thanks to https://github.com/jackocnr/intl-tel-input/
+ */
 import OWebTelInput from './OWebTelInput';
 import { cc2ToCountry, dialCodeToCc2, countries } from './countries';
 export default OWebTelInput;
 export { cc2ToCountry, dialCodeToCc2, countries };
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxZQUFZLE1BQU0sZ0JBQWdCLENBQUM7QUFDMUMsT0FBTyxFQUFZLFlBQVksRUFBRSxhQUFhLEVBQUUsU0FBUyxFQUFFLE1BQU0sYUFBYSxDQUFDO0FBRS9FLGVBQWUsWUFBWSxDQUFDO0FBQzVCLE9BQU8sRUFBWSxZQUFZLEVBQUUsYUFBYSxFQUFFLFNBQVMsRUFBRSxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IE9XZWJUZWxJbnB1dCBmcm9tICcuL09XZWJUZWxJbnB1dCc7XG5pbXBvcnQgeyB0Q291bnRyeSwgY2MyVG9Db3VudHJ5LCBkaWFsQ29kZVRvQ2MyLCBjb3VudHJpZXMgfSBmcm9tICcuL2NvdW50cmllcyc7XG5cbmV4cG9ydCBkZWZhdWx0IE9XZWJUZWxJbnB1dDtcbmV4cG9ydCB7IHRDb3VudHJ5LCBjYzJUb0NvdW50cnksIGRpYWxDb2RlVG9DYzIsIGNvdW50cmllcyB9O1xuIl19
+//# sourceMappingURL=index.js.map
