@@ -1,35 +1,50 @@
-type tCountryItem = [string, string, string, number | null, string[] | null];
-const countries = [
+/**
+ * OWebTelInput.js 2016-2019
+ *
+ * Emile Silas Sare (emile.silas@gmail.com)
+ *
+ * Thanks to https://github.com/jackocnr/intl-tel-input/
+ */
+
+type tCountryItem = {
+	0: string;
+	1: string;
+	2: string;
+	3?: number | null;
+	4?: string[] | null;
+};
+
+const countries: tCountryItem[] = [
 	['Afghanistan (‫افغانستان‬‎)', 'af', '93'],
 	['Albania (Shqipëri)', 'al', '355'],
 	['Algeria (‫الجزائر‬‎)', 'dz', '213'],
-	['American Samoa', 'as', '1684'],
+	['American Samoa', 'as', '1', 5, ['684']],
 	['Andorra', 'ad', '376'],
 	['Angola', 'ao', '244'],
-	['Anguilla', 'ai', '1264'],
-	['Antigua and Barbuda', 'ag', '1268'],
+	['Anguilla', 'ai', '1', 6, ['264']],
+	['Antigua and Barbuda', 'ag', '1', 7, ['268']],
 	['Argentina', 'ar', '54'],
 	['Armenia (Հայաստան)', 'am', '374'],
 	['Aruba', 'aw', '297'],
 	['Australia', 'au', '61', 0],
 	['Austria (Österreich)', 'at', '43'],
 	['Azerbaijan (Azərbaycan)', 'az', '994'],
-	['Bahamas', 'bs', '1242'],
+	['Bahamas', 'bs', '1', 8, ['242']],
 	['Bahrain (‫البحرين‬‎)', 'bh', '973'],
 	['Bangladesh (বাংলাদেশ)', 'bd', '880'],
-	['Barbados', 'bb', '1246'],
+	['Barbados', 'bb', '1', 9, ['246']],
 	['Belarus (Беларусь)', 'by', '375'],
 	['Belgium (België)', 'be', '32'],
 	['Belize', 'bz', '501'],
 	['Benin (Bénin)', 'bj', '229'],
-	['Bermuda', 'bm', '1441'],
+	['Bermuda', 'bm', '1', 10, ['441']],
 	['Bhutan (འབྲུག)', 'bt', '975'],
 	['Bolivia', 'bo', '591'],
 	['Bosnia and Herzegovina (Босна и Херцеговина)', 'ba', '387'],
 	['Botswana', 'bw', '267'],
 	['Brazil (Brasil)', 'br', '55'],
 	['British Indian Ocean Territory', 'io', '246'],
-	['British Virgin Islands', 'vg', '1284'],
+	['British Virgin Islands', 'vg', '1', 11, ['284']],
 	['Brunei', 'bn', '673'],
 	['Bulgaria (България)', 'bg', '359'],
 	['Burkina Faso', 'bf', '226'],
@@ -87,14 +102,14 @@ const countries = [
 		],
 	],
 	['Cape Verde (Kabu Verdi)', 'cv', '238'],
-	['Caribbean Netherlands', 'bq', '599', 1],
-	['Cayman Islands', 'ky', '1345'],
+	['Caribbean Netherlands', 'bq', '599', 1, ['3', '4', '7']],
+	['Cayman Islands', 'ky', '1', 12, ['345']],
 	['Central African Republic (République centrafricaine)', 'cf', '236'],
 	['Chad (Tchad)', 'td', '235'],
 	['Chile', 'cl', '56'],
 	['China (中国)', 'cn', '86'],
-	['Christmas Island', 'cx', '61', 2],
-	['Cocos (Keeling) Islands', 'cc', '61', 1],
+	['Christmas Island', 'cx', '61', 2, ['89164']],
+	['Cocos (Keeling) Islands', 'cc', '61', 1, ['89162']],
 	['Colombia', 'co', '57'],
 	['Comoros (‫جزر القمر‬‎)', 'km', '269'],
 	['Congo (DRC) (Jamhuri ya Kidemokrasia ya Kongo)', 'cd', '243'],
@@ -109,7 +124,7 @@ const countries = [
 	['Czech Republic (Česká republika)', 'cz', '420'],
 	['Denmark (Danmark)', 'dk', '45'],
 	['Djibouti', 'dj', '253'],
-	['Dominica', 'dm', '1767'],
+	['Dominica', 'dm', '1', 13, ['767']],
 	[
 		'Dominican Republic (República Dominicana)',
 		'do',
@@ -139,11 +154,11 @@ const countries = [
 	['Gibraltar', 'gi', '350'],
 	['Greece (Ελλάδα)', 'gr', '30'],
 	['Greenland (Kalaallit Nunaat)', 'gl', '299'],
-	['Grenada', 'gd', '1473'],
+	['Grenada', 'gd', '1', 14, ['473']],
 	['Guadeloupe', 'gp', '590', 0],
-	['Guam', 'gu', '1671'],
+	['Guam', 'gu', '1', 15, ['671']],
 	['Guatemala', 'gt', '502'],
-	['Guernsey', 'gg', '44', 1],
+	['Guernsey', 'gg', '44', 1, ['1481', '7781', '7839', '7911']],
 	['Guinea (Guinée)', 'gn', '224'],
 	['Guinea-Bissau (Guiné Bissau)', 'gw', '245'],
 	['Guyana', 'gy', '592'],
@@ -157,14 +172,14 @@ const countries = [
 	['Iran (‫ایران‬‎)', 'ir', '98'],
 	['Iraq (‫العراق‬‎)', 'iq', '964'],
 	['Ireland', 'ie', '353'],
-	['Isle of Man', 'im', '44', 2],
+	['Isle of Man', 'im', '44', 2, ['1624', '74576', '7524', '7924', '7624']],
 	['Israel (‫ישראל‬‎)', 'il', '972'],
 	['Italy (Italia)', 'it', '39', 0],
-	['Jamaica', 'jm', '1876'],
+	['Jamaica', 'jm', '1', 4, ['876', '658']],
 	['Japan (日本)', 'jp', '81'],
-	['Jersey', 'je', '44', 3],
+	['Jersey', 'je', '44', 3, ['1534', '7509', '7700', '7797', '7829', '7937']],
 	['Jordan (‫الأردن‬‎)', 'jo', '962'],
-	['Kazakhstan (Казахстан)', 'kz', '7', 1],
+	['Kazakhstan (Казахстан)', 'kz', '7', 1, ['33', '7']],
 	['Kenya', 'ke', '254'],
 	['Kiribati', 'ki', '686'],
 	['Kosovo', 'xk', '383'],
@@ -191,14 +206,14 @@ const countries = [
 	['Martinique', 'mq', '596'],
 	['Mauritania (‫موريتانيا‬‎)', 'mr', '222'],
 	['Mauritius (Moris)', 'mu', '230'],
-	['Mayotte', 'yt', '262', 1],
+	['Mayotte', 'yt', '262', 1, ['269', '639']],
 	['Mexico (México)', 'mx', '52'],
 	['Micronesia', 'fm', '691'],
 	['Moldova (Republica Moldova)', 'md', '373'],
 	['Monaco', 'mc', '377'],
 	['Mongolia (Монгол)', 'mn', '976'],
 	['Montenegro (Crna Gora)', 'me', '382'],
-	['Montserrat', 'ms', '1664'],
+	['Montserrat', 'ms', '1', 16, ['664']],
 	['Morocco (‫المغرب‬‎)', 'ma', '212', 0],
 	['Mozambique (Moçambique)', 'mz', '258'],
 	['Myanmar (Burma) (မြန်မာ)', 'mm', '95'],
@@ -214,7 +229,7 @@ const countries = [
 	['Niue', 'nu', '683'],
 	['Norfolk Island', 'nf', '672'],
 	['North Korea (조선 민주주의 인민 공화국)', 'kp', '850'],
-	['Northern Mariana Islands', 'mp', '1670'],
+	['Northern Mariana Islands', 'mp', '1', 17, ['670']],
 	['Norway (Norge)', 'no', '47', 0],
 	['Oman (‫عُمان‬‎)', 'om', '968'],
 	['Pakistan (‫پاکستان‬‎)', 'pk', '92'],
@@ -233,13 +248,13 @@ const countries = [
 	['Romania (România)', 'ro', '40'],
 	['Russia (Россия)', 'ru', '7', 0],
 	['Rwanda', 'rw', '250'],
-	['Saint Barthélemy (Saint-Barthélemy)', 'bl', '590', 1],
+	['Saint Barthélemy', 'bl', '590', 1],
 	['Saint Helena', 'sh', '290'],
-	['Saint Kitts and Nevis', 'kn', '1869'],
-	['Saint Lucia', 'lc', '1758'],
+	['Saint Kitts and Nevis', 'kn', '1', 18, ['869']],
+	['Saint Lucia', 'lc', '1', 19, ['758']],
 	['Saint Martin (Saint-Martin (partie française))', 'mf', '590', 2],
 	['Saint Pierre and Miquelon (Saint-Pierre-et-Miquelon)', 'pm', '508'],
-	['Saint Vincent and the Grenadines', 'vc', '1784'],
+	['Saint Vincent and the Grenadines', 'vc', '1', 20, ['784']],
 	['Samoa', 'ws', '685'],
 	['San Marino', 'sm', '378'],
 	['São Tomé and Príncipe (São Tomé e Príncipe)', 'st', '239'],
@@ -249,7 +264,7 @@ const countries = [
 	['Seychelles', 'sc', '248'],
 	['Sierra Leone', 'sl', '232'],
 	['Singapore', 'sg', '65'],
-	['Sint Maarten', 'sx', '1721'],
+	['Sint Maarten', 'sx', '1', 21, ['721']],
 	['Slovakia (Slovensko)', 'sk', '421'],
 	['Slovenia (Slovenija)', 'si', '386'],
 	['Solomon Islands', 'sb', '677'],
@@ -261,7 +276,7 @@ const countries = [
 	['Sri Lanka (ශ්‍රී ලංකාව)', 'lk', '94'],
 	['Sudan (‫السودان‬‎)', 'sd', '249'],
 	['Suriname', 'sr', '597'],
-	['Svalbard and Jan Mayen', 'sj', '47', 1],
+	['Svalbard and Jan Mayen', 'sj', '47', 1, ['79']],
 	['Swaziland', 'sz', '268'],
 	['Sweden (Sverige)', 'se', '46'],
 	['Switzerland (Schweiz)', 'ch', '41'],
@@ -274,13 +289,13 @@ const countries = [
 	['Togo', 'tg', '228'],
 	['Tokelau', 'tk', '690'],
 	['Tonga', 'to', '676'],
-	['Trinidad and Tobago', 'tt', '1868'],
+	['Trinidad and Tobago', 'tt', '1', 22, ['868']],
 	['Tunisia (‫تونس‬‎)', 'tn', '216'],
 	['Turkey (Türkiye)', 'tr', '90'],
 	['Turkmenistan', 'tm', '993'],
-	['Turks and Caicos Islands', 'tc', '1649'],
+	['Turks and Caicos Islands', 'tc', '1', 23, ['649']],
 	['Tuvalu', 'tv', '688'],
-	['U.S. Virgin Islands', 'vi', '1340'],
+	['U.S. Virgin Islands', 'vi', '1', 24, ['340']],
 	['Uganda', 'ug', '256'],
 	['Ukraine (Україна)', 'ua', '380'],
 	['United Arab Emirates (‫الإمارات العربية المتحدة‬‎)', 'ae', '971'],
@@ -289,42 +304,42 @@ const countries = [
 	['Uruguay', 'uy', '598'],
 	['Uzbekistan (Oʻzbekiston)', 'uz', '998'],
 	['Vanuatu', 'vu', '678'],
-	['Vatican City (Città del Vaticano)', 'va', '39', 1],
+	['Vatican City (Città del Vaticano)', 'va', '39', 1, ['06698']],
 	['Venezuela', 've', '58'],
 	['Vietnam (Việt Nam)', 'vn', '84'],
-	['Wallis and Futuna', 'wf', '681'],
-	['Western Sahara (‫الصحراء الغربية‬‎)', 'eh', '212', 1],
+	['Wallis and Futuna (Wallis-et-Futuna)', 'wf', '681'],
+	['Western Sahara (‫الصحراء الغربية‬‎)', 'eh', '212', 1, ['5288', '5289']],
 	['Yemen (‫اليمن‬‎)', 'ye', '967'],
 	['Zambia', 'zm', '260'],
 	['Zimbabwe', 'zw', '263'],
-	['Åland Islands', 'ax', '358', 1],
-] as tCountryItem[];
+	['Åland Islands', 'ax', '358', 1, ['18']],
+];
 
 export type tCountry = {
 	name: string;
 	dialCode: string;
 	cc2: string;
 	priority: number;
-	areaCodes: string[];
+	areaCodes: string[] | null;
 };
 
-let cc2ToCountry: { [key: string]: tCountry } = {},
+const cc2ToCountry: { [key: string]: tCountry } = {},
 	dialCodeToCc2: { [key: string]: string[] } = {},
-	addKey = function(key: string, to: any) {
+	addKey = function (key: string, to: any) {
 		if (!(key in to)) {
 			to[key] = [];
 		}
 	};
 
 for (let i = 0; i < countries.length; i++) {
-	let _tmp: tCountryItem = countries[i],
+	const _tmp: tCountryItem = countries[i],
 		cc2: string = _tmp[1],
 		country: tCountry = {
 			name: _tmp[0],
 			dialCode: _tmp[2],
-			cc2: cc2,
+			cc2,
 			priority: _tmp[3] || 0,
-			areaCodes: _tmp[4] || [],
+			areaCodes: _tmp[4] || null,
 		};
 
 	cc2ToCountry[cc2] = country;
@@ -334,7 +349,7 @@ for (let i = 0; i < countries.length; i++) {
 
 	if (country.areaCodes) {
 		for (let j = 0; j < country.areaCodes.length; j++) {
-			let fullDialCode = country.dialCode + country.areaCodes[j];
+			const fullDialCode = country.dialCode + country.areaCodes[j];
 			addKey(fullDialCode, dialCodeToCc2);
 			dialCodeToCc2[fullDialCode][country.priority] = cc2;
 		}
