@@ -8,7 +8,7 @@
 import './utils.js';
 import {OCountry, cc2ToCountry, dialCodeToCc2} from './countries';
 
-type tOptions = {
+type OOptions = {
 	cc2: string;
 	// nationalMode: true,
 	phoneNumber: string;
@@ -19,7 +19,7 @@ type tOptions = {
 };
 
 const utils                    = (window as any).intlTelInputUtils,
-	  defaultOptions: tOptions = {
+	  defaultOptions: OOptions = {
 		  cc2                  : 'bj',
 		  // nationalMode: false,
 		  phoneNumber          : '',
@@ -41,7 +41,7 @@ const utils                    = (window as any).intlTelInputUtils,
 
 class OWebTelInput {
 	private phoneNumber      = '';
-	private options: tOptions        = {} as tOptions;
+	private options: OOptions        = {} as OOptions;
 	private currentCountry: OCountry = {} as OCountry;
 
 	constructor(options: any) {
@@ -81,7 +81,7 @@ class OWebTelInput {
 		}
 	}
 
-	private _updateOptions(options: tOptions): this {
+	private _updateOptions(options: OOptions): this {
 		this.options        = Object.assign(
 			{},
 			defaultOptions,
@@ -104,7 +104,7 @@ class OWebTelInput {
 		return this.currentCountry;
 	}
 
-	getOptions(): tOptions {
+	getOptions(): OOptions {
 		return this.options;
 	}
 
