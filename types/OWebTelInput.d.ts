@@ -7,7 +7,7 @@
  */
 import './utils.js';
 import { OCountry } from './countries';
-declare type tOptions = {
+declare type OOptions = {
     cc2: string;
     phoneNumber: string;
     numberType: 'MOBILE';
@@ -24,7 +24,7 @@ declare class OWebTelInput {
     setCountry(cc2: string): void;
     private _updateOptions;
     getCurrentCountry(): OCountry;
-    getOptions(): tOptions;
+    getOptions(): OOptions;
     isValid(phoneNumber?: string): boolean;
     isPossible(phoneNumber?: string): boolean;
     isFor(type: string, phoneNumber?: string): boolean;
