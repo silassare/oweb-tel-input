@@ -1,12 +1,12 @@
 /**
- * OWebTelInput.js 2016-2019
+ * OWebTelInput.js Since 2016
  *
  * Emile Silas Sare (emile.silas@gmail.com)
  *
  * Thanks to https://github.com/jackocnr/intl-tel-input/
  */
 import './utils.js';
-import { tCountry } from './countries';
+import { OCountry } from './countries';
 declare type tOptions = {
     cc2: string;
     phoneNumber: string;
@@ -23,7 +23,7 @@ declare class OWebTelInput {
     setPhoneNumber(phoneNumber: string): this;
     setCountry(cc2: string): void;
     private _updateOptions;
-    getCurrentCountry(): tCountry;
+    getCurrentCountry(): OCountry;
     getOptions(): tOptions;
     isValid(phoneNumber?: string): boolean;
     isPossible(phoneNumber?: string): boolean;
@@ -31,10 +31,10 @@ declare class OWebTelInput {
     getSample(isNationalMode?: boolean): string;
     getInput(format?: boolean): any;
     static isPhoneNumberPossible(phoneNumber: string, possible?: boolean): boolean;
-    static getCountryWithCc2(cc2: string): tCountry;
-    static getCountryWithDialCode(dialCode: string): tCountry | null;
+    static getCountryWithCc2(cc2: string): OCountry;
+    static getCountryWithDialCode(dialCode: string): OCountry | null;
     static getCountriesList(): {
-        [key: string]: tCountry;
+        [key: string]: OCountry;
     };
     static getDialCode(str: string): string;
     private _getFormat;

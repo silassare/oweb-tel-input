@@ -1,5 +1,5 @@
 /**
- * OWebTelInput.js 2016-2019
+ * OWebTelInput.js Since 2016
  *
  * Emile Silas Sare (emile.silas@gmail.com)
  *
@@ -60,11 +60,11 @@ class OWebTelInput {
     }
     _updateOptions(options) {
         this.options = Object.assign({}, defaultOptions, options || this.options || {});
-        this.currentCountry = OWebTelInput.getCountryWithCc2(this.options.cc2);
-        if (!this.options.phoneNumber) {
+        const cc2 = this.options.cc2;
+        this.currentCountry = OWebTelInput.getCountryWithCc2(cc2);
+        if (!this.options.phoneNumber && cc2ToCountry[cc2]) {
             // if no phoneNumber initialize to default cc2 dialCode
-            this.options.phoneNumber =
-                '+' + cc2ToCountry[this.options.cc2.toLowerCase()].dialCode;
+            this.options.phoneNumber = '+' + cc2ToCountry[cc2].dialCode;
         }
         this.setPhoneNumber(this.options.phoneNumber);
         return this;
@@ -97,7 +97,7 @@ class OWebTelInput {
     }
     static isPhoneNumberPossible(phoneNumber, possible = false) {
         const instance = new OWebTelInput({ phoneNumber });
-        if (possible === true) {
+        if (possible) {
             return instance.isPossible();
         }
         return (instance.isValid() ||

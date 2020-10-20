@@ -1,19 +1,19 @@
 /**
- * OWebTelInput.js 2016-2019
+ * OWebTelInput.js Since 2016
  *
  * Emile Silas Sare (emile.silas@gmail.com)
  *
  * Thanks to https://github.com/jackocnr/intl-tel-input/
  */
-declare type tCountryItem = {
+declare type OCountryItem = {
     0: string;
     1: string;
     2: string;
     3?: number | null;
     4?: string[] | null;
 };
-declare const countries: tCountryItem[];
-export declare type tCountry = {
+declare const countries: OCountryItem[];
+export declare type OCountry = {
     name: string;
     dialCode: string;
     cc2: string;
@@ -21,7 +21,7 @@ export declare type tCountry = {
     areaCodes: string[] | null;
 };
 declare const cc2ToCountry: {
-    [key: string]: tCountry;
+    [key: string]: OCountry;
 }, dialCodeToCc2: {
     [key: string]: string[];
 };
