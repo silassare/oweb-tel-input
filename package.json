@@ -1,7 +1,7 @@
 {
 	"name": "oweb-tel-input",
 	"version": "1.0.1",
-	"description": "A simple phone input validator for oweb",
+	"description": "A simple phone input validator and formatter plugin for O'Web",
 	"main": "dist/index.js",
 	"typings": "types/index.d.ts",
 	"keywords": [
@@ -18,6 +18,7 @@
 	],
 	"scripts": {
 		"build": "tsc && ./down.sh",
+		"lint": "eslint --fix ./src",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
@@ -27,6 +28,11 @@
 	"author": "Emile Silas SARE",
 	"license": "ISC",
 	"devDependencies": {
-		"typescript": "^2.6.2"
+		"@typescript-eslint/eslint-plugin": "^2.33.0",
+		"@typescript-eslint/parser": "^2.33.0",
+		"eslint": "^7.10.0"
+	},
+	"dependencies": {
+		"typescript": "^4.0.3"
 	}
 }
