@@ -1,12 +1,12 @@
 /**
- * OWebTelInput.js 2016-2019
+ * OWebTelInput.js Since 2016
  *
  * Emile Silas Sare (emile.silas@gmail.com)
  *
  * Thanks to https://github.com/jackocnr/intl-tel-input/
  */
 import './utils.js';
-import { tCountry, cc2ToCountry, dialCodeToCc2, countries } from './countries';
+import {OCountry, cc2ToCountry, dialCodeToCc2} from './countries';
 
 type tOptions = {
 	cc2: string;
@@ -18,31 +18,31 @@ type tOptions = {
 	allowedCountries: () => string[];
 };
 
-const utils = (window as any).intlTelInputUtils,
-	defaultOptions: tOptions = {
-		cc2: 'bj',
-		// nationalMode: false,
-		phoneNumber: '',
-		numberType: 'MOBILE',
-		preferredCountries: ['bj'],
-		showSamplePlaceholder: true,
-		allowedCountries: () => [],
-	},
-	cleanPhoneString = function (str: string) {
-		return (
-			'+' +
-			str
-				.replace(/[^\d -]/g, '')
-				.replace(/\s+/g, ' ')
-				.replace(/-[^\d]/g, '-')
-				.replace(/^[^1-9]+/g, '')
-		);
-	};
+const utils                    = (window as any).intlTelInputUtils,
+	  defaultOptions: tOptions = {
+		  cc2                  : 'bj',
+		  // nationalMode: false,
+		  phoneNumber          : '',
+		  numberType           : 'MOBILE',
+		  preferredCountries   : ['bj'],
+		  showSamplePlaceholder: true,
+		  allowedCountries     : () => [],
+	  },
+	  cleanPhoneString         = function (str: string) {
+		  return (
+			  '+' +
+			  str
+				  .replace(/[^\d -]/g, '')
+				  .replace(/\s+/g, ' ')
+				  .replace(/-[^\d]/g, '-')
+				  .replace(/^[^1-9]+/g, '')
+		  );
+	  };
 
 class OWebTelInput {
-	private phoneNumber: string = '';
-	private options: tOptions = {} as tOptions;
-	private currentCountry: tCountry = {} as tCountry;
+	private phoneNumber      = '';
+	private options: tOptions        = {} as tOptions;
+	private currentCountry: OCountry = {} as OCountry;
 
 	constructor(options: any) {
 		this._updateOptions(options);
@@ -58,7 +58,7 @@ class OWebTelInput {
 			this.currentCountry =
 				OWebTelInput.getCountryWithDialCode(dialCode) ||
 				this.currentCountry;
-			formatted = this._getFormat(phoneNumber);
+			formatted           = this._getFormat(phoneNumber);
 
 			this.phoneNumber = formatted;
 		} else {
@@ -71,8 +71,8 @@ class OWebTelInput {
 	setCountry(cc2: string) {
 		const cc2Lower = cc2.toLowerCase();
 		if (cc2ToCountry[cc2Lower]) {
-			const opt = Object.assign({}, this.options);
-			opt.cc2 = cc2Lower;
+			const opt       = Object.assign({}, this.options);
+			opt.cc2         = cc2Lower;
 			opt.phoneNumber = '+' + cc2ToCountry[cc2Lower].dialCode;
 
 			this._updateOptions(opt);
@@ -82,17 +82,17 @@ class OWebTelInput {
 	}
 
 	private _updateOptions(options: tOptions): this {
-		this.options = Object.assign(
+		this.options        = Object.assign(
 			{},
 			defaultOptions,
 			options || this.options || {},
 		);
-		this.currentCountry = OWebTelInput.getCountryWithCc2(this.options.cc2);
+		const cc2           = this.options.cc2;
+		this.currentCountry = OWebTelInput.getCountryWithCc2(cc2);
 
-		if (!this.options.phoneNumber) {
+		if (!this.options.phoneNumber && cc2ToCountry[cc2]) {
 			// if no phoneNumber initialize to default cc2 dialCode
-			this.options.phoneNumber =
-				'+' + cc2ToCountry[this.options.cc2.toLowerCase()].dialCode;
+			this.options.phoneNumber = '+' + cc2ToCountry[cc2].dialCode;
 		}
 
 		this.setPhoneNumber(this.options.phoneNumber);
@@ -100,7 +100,7 @@ class OWebTelInput {
 		return this;
 	}
 
-	getCurrentCountry(): tCountry {
+	getCurrentCountry(): OCountry {
 		return this.currentCountry;
 	}
 
@@ -126,7 +126,7 @@ class OWebTelInput {
 		);
 	}
 
-	getSample(isNationalMode: boolean = false): string {
+	getSample(isNationalMode = false): string {
 		const numberType = utils.numberType[this.options.numberType];
 
 		return utils.getExampleNumber(
@@ -136,19 +136,19 @@ class OWebTelInput {
 		);
 	}
 
-	getInput(format: boolean = false) {
+	getInput(format = false) {
 		return format
-			? this._getFormat(this.phoneNumber)
-			: utils.formatNumber(this.phoneNumber, this.currentCountry.cc2);
+			   ? this._getFormat(this.phoneNumber)
+			   : utils.formatNumber(this.phoneNumber, this.currentCountry.cc2);
 	}
 
 	static isPhoneNumberPossible(
 		phoneNumber: string,
-		possible: boolean = false,
+		possible = false,
 	) {
-		const instance = new OWebTelInput({ phoneNumber });
+		const instance = new OWebTelInput({phoneNumber});
 
-		if (possible === true) {
+		if (possible) {
 			return instance.isPossible();
 		}
 
@@ -162,7 +162,7 @@ class OWebTelInput {
 		return cc2ToCountry[cc2.toLowerCase()];
 	}
 
-	static getCountryWithDialCode(dialCode: string): tCountry | null {
+	static getCountryWithDialCode(dialCode: string): OCountry | null {
 		let found = null;
 
 		if (dialCode) {
@@ -186,8 +186,8 @@ class OWebTelInput {
 
 	static getDialCode(str: string): string {
 		const phoneNumber = String(str),
-			numberReg = /[0-9]/;
-		let dialCode = '';
+			  numberReg   = /[0-9]/;
+		let dialCode      = '';
 
 		// only interested in international numbers (starting with a plus)
 		if (phoneNumber.charAt(0) === '+') {
@@ -216,15 +216,15 @@ class OWebTelInput {
 
 	private _getFormat(
 		phoneNumber: string,
-		isNationalMode: boolean = false,
+		isNationalMode = false,
 	): string {
 		const run = phoneNumber && phoneNumber.trim().length > 1;
 		if (run) {
 			const format =
-				isNationalMode || phoneNumber.charAt(0) !== '+'
-					? utils.numberFormat.NATIONAL
-					: utils.numberFormat.INTERNATIONAL;
-			phoneNumber = utils.formatNumber(
+					  isNationalMode || phoneNumber.charAt(0) !== '+'
+					  ? utils.numberFormat.NATIONAL
+					  : utils.numberFormat.INTERNATIONAL;
+			phoneNumber  = utils.formatNumber(
 				phoneNumber,
 				this.currentCountry.cc2,
 				format,

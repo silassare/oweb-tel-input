@@ -1,12 +1,12 @@
 /**
- * OWebTelInput.js 2016-2019
+ * OWebTelInput.js Since 2016
  *
  * Emile Silas Sare (emile.silas@gmail.com)
  *
  * Thanks to https://github.com/jackocnr/intl-tel-input/
  */
 
-type tCountryItem = {
+type OCountryItem = {
 	0: string;
 	1: string;
 	2: string;
@@ -14,7 +14,7 @@ type tCountryItem = {
 	4?: string[] | null;
 };
 
-const countries: tCountryItem[] = [
+const countries: OCountryItem[] = [
 	['Afghanistan (‫افغانستان‬‎)', 'af', '93'],
 	['Albania (Shqipëri)', 'al', '355'],
 	['Algeria (‫الجزائر‬‎)', 'dz', '213'],
@@ -315,7 +315,7 @@ const countries: tCountryItem[] = [
 	['Åland Islands', 'ax', '358', 1, ['18']],
 ];
 
-export type tCountry = {
+export type OCountry = {
 	name: string;
 	dialCode: string;
 	cc2: string;
@@ -323,18 +323,18 @@ export type tCountry = {
 	areaCodes: string[] | null;
 };
 
-const cc2ToCountry: { [key: string]: tCountry } = {},
-	dialCodeToCc2: { [key: string]: string[] } = {},
-	addKey = function (key: string, to: any) {
+const cc2ToCountry: { [key: string]: OCountry } = {},
+	dialCodeToCc2: { [key: string]: string[] }  = {},
+	addKey                                      = function (key: string, to: any) {
 		if (!(key in to)) {
 			to[key] = [];
 		}
 	};
 
 for (let i = 0; i < countries.length; i++) {
-	const _tmp: tCountryItem = countries[i],
-		cc2: string = _tmp[1],
-		country: tCountry = {
+	const _tmp: OCountryItem = countries[i],
+		cc2: string          = _tmp[1],
+		country: OCountry    = {
 			name: _tmp[0],
 			dialCode: _tmp[2],
 			cc2,

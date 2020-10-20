@@ -1,5 +1,5 @@
 /**
- * OWebTelInput.js 2016-2019
+ * OWebTelInput.js Since 2016
  *
  * Emile Silas Sare (emile.silas@gmail.com)
  *
@@ -7,7 +7,7 @@
  */
 
 import OWebTelInput from './OWebTelInput';
-import { tCountry, cc2ToCountry, dialCodeToCc2, countries } from './countries';
+import { OCountry, cc2ToCountry, dialCodeToCc2, countries } from './countries';
 
 export default OWebTelInput;
-export { tCountry, cc2ToCountry, dialCodeToCc2, countries };
+export { OCountry, cc2ToCountry, dialCodeToCc2, countries };
