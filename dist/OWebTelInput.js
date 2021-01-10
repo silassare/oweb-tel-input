@@ -17,7 +17,7 @@ const utils = window.intlTelInputUtils, defaultOptions = {
     allowedCountries: () => [],
 }, cleanPhoneString = function (str) {
     return ('+' +
-        str
+        String(str)
             .replace(/[^\d -]/g, '')
             .replace(/\s+/g, ' ')
             .replace(/-[^\d]/g, '-')
@@ -92,8 +92,11 @@ class OWebTelInput {
     }
     getInput(format = false) {
         return format
-            ? this._getFormat(this.phoneNumber)
+            ? this.format()
             : utils.formatNumber(this.phoneNumber, this.currentCountry.cc2);
+    }
+    format() {
+        return this._getFormat(this.phoneNumber);
     }
     static isPhoneNumberPossible(phoneNumber, possible = false) {
         const instance = new OWebTelInput({ phoneNumber });
