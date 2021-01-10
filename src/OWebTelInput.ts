@@ -6,7 +6,7 @@
  * Thanks to https://github.com/jackocnr/intl-tel-input/
  */
 import './utils.js';
-import {OCountry, cc2ToCountry, dialCodeToCc2} from './countries';
+import { OCountry, cc2ToCountry, dialCodeToCc2 } from './countries';
 
 type OOptions = {
 	cc2: string;
@@ -18,30 +18,30 @@ type OOptions = {
 	allowedCountries: () => string[];
 };
 
-const utils                    = (window as any).intlTelInputUtils,
-	  defaultOptions: OOptions = {
-		  cc2                  : 'bj',
-		  // nationalMode: false,
-		  phoneNumber          : '',
-		  numberType           : 'MOBILE',
-		  preferredCountries   : ['bj'],
-		  showSamplePlaceholder: true,
-		  allowedCountries     : () => [],
-	  },
-	  cleanPhoneString         = function (str: string) {
-		  return (
-			  '+' +
-			  str
-				  .replace(/[^\d -]/g, '')
-				  .replace(/\s+/g, ' ')
-				  .replace(/-[^\d]/g, '-')
-				  .replace(/^[^1-9]+/g, '')
-		  );
-	  };
+const utils = (window as any).intlTelInputUtils,
+	defaultOptions: OOptions = {
+		cc2: 'bj',
+		// nationalMode: false,
+		phoneNumber: '',
+		numberType: 'MOBILE',
+		preferredCountries: ['bj'],
+		showSamplePlaceholder: true,
+		allowedCountries: () => [],
+	},
+	cleanPhoneString = function (str: string) {
+		return (
+			'+' +
+			str
+				.replace(/[^\d -]/g, '')
+				.replace(/\s+/g, ' ')
+				.replace(/-[^\d]/g, '-')
+				.replace(/^[^1-9]+/g, '')
+		);
+	};
 
 class OWebTelInput {
-	private phoneNumber      = '';
-	private options: OOptions        = {} as OOptions;
+	private phoneNumber = '';
+	private options: OOptions = {} as OOptions;
 	private currentCountry: OCountry = {} as OCountry;
 
 	constructor(options: Partial<OOptions> = {}) {
@@ -58,7 +58,7 @@ class OWebTelInput {
 			this.currentCountry =
 				OWebTelInput.getCountryWithDialCode(dialCode) ||
 				this.currentCountry;
-			formatted           = this._getFormat(phoneNumber);
+			formatted = this._getFormat(phoneNumber);
 
 			this.phoneNumber = formatted;
 		} else {
@@ -71,8 +71,8 @@ class OWebTelInput {
 	setCountry(cc2: string) {
 		const cc2Lower = cc2.toLowerCase();
 		if (cc2ToCountry[cc2Lower]) {
-			const opt       = Object.assign({}, this.options);
-			opt.cc2         = cc2Lower;
+			const opt = Object.assign({}, this.options);
+			opt.cc2 = cc2Lower;
 			opt.phoneNumber = '+' + cc2ToCountry[cc2Lower].dialCode;
 
 			this._updateOptions(opt);
@@ -82,11 +82,12 @@ class OWebTelInput {
 	}
 
 	private _updateOptions(options: Partial<OOptions> = {}): this {
+		this.options = Object.assign(
 			{},
 			defaultOptions,
 			options || this.options || {},
 		);
-		const cc2           = this.options.cc2;
+		const cc2 = this.options.cc2;
 		this.currentCountry = OWebTelInput.getCountryWithCc2(cc2);
 
 		if (!this.options.phoneNumber && cc2ToCountry[cc2]) {
@@ -137,15 +138,12 @@ class OWebTelInput {
 
 	getInput(format = false) {
 		return format
-			   ? this._getFormat(this.phoneNumber)
-			   : utils.formatNumber(this.phoneNumber, this.currentCountry.cc2);
+			? this._getFormat(this.phoneNumber)
+			: utils.formatNumber(this.phoneNumber, this.currentCountry.cc2);
 	}
 
-	static isPhoneNumberPossible(
-		phoneNumber: string,
-		possible = false,
-	) {
-		const instance = new OWebTelInput({phoneNumber});
+	static isPhoneNumberPossible(phoneNumber: string, possible = false) {
+		const instance = new OWebTelInput({ phoneNumber });
 
 		if (possible) {
 			return instance.isPossible();
@@ -185,8 +183,8 @@ class OWebTelInput {
 
 	static getDialCode(str: string): string {
 		const phoneNumber = String(str),
-			  numberReg   = /[0-9]/;
-		let dialCode      = '';
+			numberReg = /[0-9]/;
+		let dialCode = '';
 
 		// only interested in international numbers (starting with a plus)
 		if (phoneNumber.charAt(0) === '+') {
@@ -213,17 +211,14 @@ class OWebTelInput {
 		return dialCode;
 	}
 
-	private _getFormat(
-		phoneNumber: string,
-		isNationalMode = false,
-	): string {
+	private _getFormat(phoneNumber: string, isNationalMode = false): string {
 		const run = phoneNumber && phoneNumber.trim().length > 1;
 		if (run) {
 			const format =
-					  isNationalMode || phoneNumber.charAt(0) !== '+'
-					  ? utils.numberFormat.NATIONAL
-					  : utils.numberFormat.INTERNATIONAL;
-			phoneNumber  = utils.formatNumber(
+				isNationalMode || phoneNumber.charAt(0) !== '+'
+					? utils.numberFormat.NATIONAL
+					: utils.numberFormat.INTERNATIONAL;
+			phoneNumber = utils.formatNumber(
 				phoneNumber,
 				this.currentCountry.cc2,
 				format,
