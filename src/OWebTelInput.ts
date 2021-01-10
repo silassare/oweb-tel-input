@@ -44,7 +44,7 @@ class OWebTelInput {
 	private options: OOptions        = {} as OOptions;
 	private currentCountry: OCountry = {} as OCountry;
 
-	constructor(options: any) {
+	constructor(options: Partial<OOptions> = {}) {
 		this._updateOptions(options);
 	}
 
@@ -81,8 +81,7 @@ class OWebTelInput {
 		}
 	}
 
-	private _updateOptions(options: OOptions): this {
-		this.options        = Object.assign(
+	private _updateOptions(options: Partial<OOptions> = {}): this {
 			{},
 			defaultOptions,
 			options || this.options || {},
