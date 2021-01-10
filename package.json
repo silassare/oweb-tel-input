@@ -17,7 +17,7 @@
 		"types/*.d.ts"
 	],
 	"scripts": {
-		"build": "tsc && ./down.sh",
+		"build": "npm run lint & tsc && ./down.sh",
 		"lint": "eslint --fix ./src",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
