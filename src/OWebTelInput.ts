@@ -138,8 +138,12 @@ class OWebTelInput {
 
 	getInput(format = false) {
 		return format
-			? this._getFormat(this.phoneNumber)
+			? this.format()
 			: utils.formatNumber(this.phoneNumber, this.currentCountry.cc2);
+	}
+
+	format() {
+		return this._getFormat(this.phoneNumber);
 	}
 
 	static isPhoneNumberPossible(phoneNumber: string, possible = false) {
