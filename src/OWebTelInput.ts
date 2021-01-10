@@ -31,7 +31,7 @@ const utils = (window as any).intlTelInputUtils,
 	cleanPhoneString = function (str: string) {
 		return (
 			'+' +
-			str
+			String(str)
 				.replace(/[^\d -]/g, '')
 				.replace(/\s+/g, ' ')
 				.replace(/-[^\d]/g, '-')
