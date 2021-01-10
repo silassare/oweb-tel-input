@@ -19,7 +19,7 @@ declare class OWebTelInput {
     private phoneNumber;
     private options;
     private currentCountry;
-    constructor(options: any);
+    constructor(options?: Partial<OOptions>);
     setPhoneNumber(phoneNumber: string): this;
     setCountry(cc2: string): void;
     private _updateOptions;

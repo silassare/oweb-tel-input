@@ -24,7 +24,7 @@ const utils = window.intlTelInputUtils, defaultOptions = {
             .replace(/^[^1-9]+/g, ''));
 };
 class OWebTelInput {
-    constructor(options) {
+    constructor(options = {}) {
         this.phoneNumber = '';
         this.options = {};
         this.currentCountry = {};
@@ -58,7 +58,7 @@ class OWebTelInput {
             throw new Error('Unknown country code: ' + cc2);
         }
     }
-    _updateOptions(options) {
+    _updateOptions(options = {}) {
         this.options = Object.assign({}, defaultOptions, options || this.options || {});
         const cc2 = this.options.cc2;
         this.currentCountry = OWebTelInput.getCountryWithCc2(cc2);
