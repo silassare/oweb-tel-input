@@ -24,10 +24,10 @@ const utils = window.intlTelInputUtils, defaultOptions = {
             .replace(/^[^1-9]+/g, ''));
 };
 class OWebTelInput {
+    phoneNumber = '';
+    options = {};
+    currentCountry = {};
     constructor(options = {}) {
-        this.phoneNumber = '';
-        this.options = {};
-        this.currentCountry = {};
         this._updateOptions(options);
     }
     setPhoneNumber(phoneNumber) {
